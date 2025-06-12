@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Reservas - Atendente</title>
+
+    <!-- Bootstrap CSS Framework -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        /* RESET CSS E CONFIGURAÇÕES GLOBAIS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Configuração principal do corpo da página */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* CABEÇALHO DA PÁGINA */
+        .header {
+            background: white;
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            text-align: center;
+            color: #333;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            color: #667eea;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            color: #6c757d;
+        }
+
+        /* CONTAINER PRINCIPAL */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* BOTÃO DE VOLTAR */
+        .back-button {
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        .back-button:hover {
+            background: #667eea;
+            transform: translateX(-5px);
+            color: white;
+        }
+
+        /* CARDS DE SEÇÕES (CRIAR/CANCELAR RESERVAS) */
+        .section-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            /* Borda colorida na lateral esquerda */
+            border-left: 5px solid #667eea;
+        }
+
+        /* Efeito hover dos cards */
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border-color: #667eea;
+        }
+
+        /* Efeito de brilho que passa pelo card */
+        .section-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .section-card:hover::before {
+            left: 100%;
+        }
+
+        /* Títulos das seções */
+        .section-card h2 {
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Ícones das seções */
+        .section-icon {
+            font-size: 2rem;
+            color: #667eea;
+        }
+
+        /* FORMULÁRIOS E INPUTS */
+        
+        /* Labels dos formulários */
+        .form-label {
+            color: #495057;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Inputs e selects */
+        .form-control, .form-select {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            color: #333;
+            padding: 0.8rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        /* Efeito hover nos inputs */
+        .form-control:hover, .form-select:hover {
+            border-color: #adb5bd;
+            background: #f8f9fa;
+        }
+
+        /* Efeito focus nos inputs */
+        .form-control:focus, .form-select:focus {
+            background: white;
+            border-color: #667eea;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.2);
+            color: #333;
+        }
+
+        /* Placeholder dos inputs */
+        .form-control::placeholder {
+            color: #6c757d;
+        }
+
+        /* Opções dos selects */
+        .form-select option {
+            background: white;
+            color: #333;
+        }
+
+        /* BOTÕES PRINCIPAIS */
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 15px;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: white;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+            background: linear-gradient(45deg, #5a6fd8, #6a42a0);
+        }
+
+        /* Efeito de brilho nos botões */
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        /* Botões secundários */
+        .btn-outline-secondary {
+            background: white;
+            border: 2px solid #6c757d;
+            color: #6c757d;
+            border-radius: 10px;
+            padding: 0.8rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-secondary:hover {
+            background: #6c757d;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* MENSAGENS DE RESPOSTA */
+        #resposta-criacao, #cancelamento-resposta {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        /* Mensagens de sucesso */
+        .success {
+            background: rgba(40, 167, 69, 0.1);
+            border: 2px solid #28a745;
+            color: #28a745;
+        }
+
+        /* Mensagens de erro */
+        .error {
+            background: rgba(220, 53, 69, 0.1);
+            border: 2px solid #dc3545;
+            color: #dc3545;
+        }
+
+        /* ANIMAÇÕES */
+        
+        /* Animação de fade in */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Estado de loading dos botões */
+        .loading {
+            position: relative;
+        }
+
+        /* Spinner de loading */
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* RESPONSIVIDADE MOBILE */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .section-card {
+                padding: 1.5rem;
+            }
+            
+            .section-card h2 {
+                font-size: 1.5rem;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- CABEÇALHO DA PÁGINA -->
+    <div class="header">
+        <h1>🍽️ Sistema de Reservas</h1>
+        <p>Painel do Atendente</p>
+    </div>
+
+    <!-- CONTAINER PRINCIPAL -->
+    <div class="container">
+        <!-- Botão para voltar ao menu principal -->
+        <a href="/" class="back-button">← Voltar ao Menu Principal</a>
+
+        <!-- SEÇÃO: CRIAR RESERVA -->
+        <div class="section-card fade-in">
+            <h2><span class="section-icon">➕</span> Criar Reserva</h2>
+            <form id="form-criar-reserva" class="row g-3">
+                <!-- Campo: Data -->
+                <div class="col-md-6">
+                    <label for="data" class="form-label">Data (DD/MM/AAAA):</label>
+                    <input type="text" id="data" class="form-control" placeholder="13/06/2025" />
+                </div>
+                
+                <!-- Campo: Hora -->
+                <div class="col-md-6">
+                    <label for="hora" class="form-label">Hora:</label>
+                    <select id="hora" class="form-select">
+                        <option value="">Selecione a hora</option>
+                        <option value="11:30">11:30</option>
+                        <option value="12:00">12:00</option>
+                        <option value="12:30">12:30</option>
+                        <option value="13:00">13:00</option>
+                        <option value="13:30">13:30</option>
+                        <option value="14:00">14:00</option>
+                        <option value="14:30">14:30</option>
+                        <option value="15:00">15:00</option>
+                        <option value="15:30">15:30</option>
+                        <option value="16:00">16:00</option>
+                        <option value="16:30">16:30</option>
+                        <option value="17:00">17:00</option>
+                        <option value="17:30">17:30</option>
+                        <option value="18:00">18:00</option>
+                        <option value="18:30">18:30</option>
+                        <option value="19:00">19:00</option>
+                        <option value="19:30">19:30</option>
+                        <option value="20:00">20:00</option>
+                        <option value="20:30">20:30</option>
+                        <option value="21:00">21:00</option>
+                        <option value="21:30">21:30</option>
+                        <option value="22:00">22:00</option>
+                    </select>
+                </div>
+                
+                <!-- Campo: Mesa -->
+                <div class="col-md-4">
+                    <label for="mesa" class="form-label">Mesa:</label>
+                    <select id="mesa" class="form-select">
+                        <option value="">Selecione a mesa</option>
+                        <!-- Opções de mesa de 1 a 20 -->
+                        <option value="1">Mesa 1</option>
+                        <option value="2">Mesa 2</option>
+                        <option value="3">Mesa 3</option>
+                        <option value="4">Mesa 4</option>
+                        <option value="5">Mesa 5</option>
+                        <option value="6">Mesa 6</option>
+                        <option value="7">Mesa 7</option>
+                        <option value="8">Mesa 8</option>
+                        <option value="9">Mesa 9</option>
+                        <option value="10">Mesa 10</option>
+                        <option value="11">Mesa 11</option>
+                        <option value="12">Mesa 12</option>
+                        <option value="13">Mesa 13</option>
+                        <option value="14">Mesa 14</option>
+                        <option value="15">Mesa 15</option>
+                        <option value="16">Mesa 16</option>
+                        <option value="17">Mesa 17</option>
+                        <option value="18">Mesa 18</option>
+                        <option value="19">Mesa 19</option>
+                        <option value="20">Mesa 20</option>
+                    </select>
+                </div>
+                
+                <!-- Campo: Quantidade de pessoas -->
+                <div class="col-md-4">
+                    <label for="pessoas" class="form-label">Quantidade de pessoas:</label>
+                    <select id="pessoas" class="form-select">
+                        <option value="">Selecione</option>
+                        <!-- Opções de 1 a 20 pessoas -->
+                        <option value="1">1 pessoa</option>
+                        <option value="2">2 pessoas</option>
+                        <option value="3">3 pessoas</option>
+                        <option value="4">4 pessoas</option>
+                        <option value="5">5 pessoas</option>
+                        <option value="6">6 pessoas</option>
+                        <option value="7">7 pessoas</option>
+                        <option value="8">8 pessoas</option>
+                        <option value="9">9 pessoas</option>
+                        <option value="10">10 pessoas</option>
+                        <option value="11">11 pessoas</option>
+                        <option value="12">12 pessoas</option>
+                        <option value="13">13 pessoas</option>
+                        <option value="14">14 pessoas</option>
+                        <option value="15">15 pessoas</option>
+                        <option value="16">16 pessoas</option>
+                        <option value="17">17 pessoas</option>
+                        <option value="18">18 pessoas</option>
+                        <option value="19">19 pessoas</option>
+                        <option value="20">20 pessoas</option>
+                    </select>
+                </div>
+                
+                <!-- Campo: Nome do responsável -->
+                <div class="col-md-4">
+                    <label for="responsavel" class="form-label">Nome do responsável:</label>
+                    <input type="text" id="responsavel" class="form-control" />
+                </div>
+                
+                <!-- Botão de criar reserva -->
+                <div class="col-12">
+                    <button type="button" class="btn btn-primary" onclick="criarReserva()">
+                        ✨ Criar Reserva
+                    </button>
+                </div>
+                
+                <!-- Área de resposta para criação -->
+                <div class="col-12">
+                    <div id="resposta-criacao"></div>
+                </div>
+            </form>
+        </div>
+
+        <!-- SEÇÃO: CANCELAR RESERVA -->
+        <div class="section-card fade-in">
+            <h2><span class="section-icon">❌</span> Cancelar Reserva</h2>
+            <form id="form-cancelar-reserva" class="row g-3">
+                <!-- Campo: ID da reserva -->
+                <div class="col-md-6">
+                    <label for="id_reserva" class="form-label">ID da Reserva:</label>
+                    <input type="text" id="id_reserva" class="form-control" placeholder="Digite o ID da reserva" />
+                </div>
+                
+                <!-- Botão de cancelar reserva -->
+                <div class="col-12">
+                    <button type="button" class="btn btn-primary" onclick="cancelarReserva()">
+                        🗑️ Cancelar Reserva
+                    </button>
+                </div>
+                
+                <!-- Área de resposta para cancelamento -->
+                <div class="col-12">
+                    <div id="cancelamento-resposta"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- FUNCIONALIDADES -->
+    <script>
+         
+        function converterDataParaISO(dataStr) {
+            const partes = dataStr.split('/');
+            if (partes.length !== 3) return null;
+            
+            const dia = partes[0].padStart(2, '0');
+            const mes = partes[1].padStart(2, '0');
+            const ano = partes[2];
+            
+            return `${ano}-${mes}-${dia}`;
+        }
+
+        function validarDataHora(dataStr, horaStr) {
+            const dataISO = converterDataParaISO(dataStr);
+            if (!dataISO) return false;
+            
+            const dataHoraReserva = new Date(dataISO + 'T' + horaStr);
+            const agora = new Date();
+            
+            return dataHoraReserva > agora;
+        }
+
+        function mostrarResposta(elementId, mensagem, tipo) {
+            const elemento = document.getElementById(elementId);
+            elemento.textContent = mensagem;
+            elemento.className = tipo === 'success' ? 'success fade-in' : 'error fade-in';
+            elemento.style.display = 'block';
+        }
+
+        /* FUNÇÃO: CRIAR RESERVA */
+        async function criarReserva() {
+            // Obtém referência do botão e ativa estado de loading
+            const botao = document.querySelector('#form-criar-reserva .btn-primary');
+            botao.classList.add('loading');
+            botao.disabled = true;
+
+            // Coleta valores dos campos do formulário
+            const dataInput = document.getElementById("data").value;
+            const horaInput = document.getElementById("hora").value;
+            const mesaInput = document.getElementById("mesa").value;
+            const pessoasInput = document.getElementById("pessoas").value;
+            const responsavelInput = document.getElementById("responsavel").value;
+
+            // Validação: todos os campos devem estar preenchidos
+            if (!dataInput || !horaInput || !mesaInput || !pessoasInput || !responsavelInput) {
+                mostrarResposta("resposta-criacao", "Preencha todos os campos", "error");
+                botao.classList.remove('loading');
+                botao.disabled = false;
+                return;
+            }
+
+            // Validação: formato da data
+            const dataISO = converterDataParaISO(dataInput);
+            if (!dataISO) {
+                mostrarResposta("resposta-criacao", "Formato de data inválido. Use DD/MM/AAAA", "error");
+                botao.classList.remove('loading');
+                botao.disabled = false;
+                return;
+            }
+
+            // Validação: data e hora não podem ser no passado
+            if (!validarDataHora(dataInput, horaInput)) {
+                mostrarResposta("resposta-criacao", "Não é possível fazer reservas para datas/horas passadas", "error");
+                botao.classList.remove('loading');
+                botao.disabled = false;
+                return;
+            }
+
+            // Prepara dados para envio à API
+            const dados = {
+                data: dataISO,
+                hora: horaInput,
+                mesa: parseInt(mesaInput),
+                pessoas: parseInt(pessoasInput),
+                responsavel: responsavelInput
+            };
+
+            try {
+                // Envia requisição POST para criar reserva
+                const res = await fetch('/reserva', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(dados)
+                });
+
+                if (res.ok) {
+                    // Sucesso: exibe mensagem e limpa formulário
+                    const resultado = await res.json();
+                    mostrarResposta("resposta-criacao", `Reserva criada com sucesso! ID: ${resultado.id}`, "success");
+                    
+                    // Limpa todos os campos do formulário
+                    document.getElementById("data").value = '';
+                    document.getElementById("hora").value = '';
+                    document.getElementById("mesa").value = '';
+                    document.getElementById("pessoas").value = '';
+                    document.getElementById("responsavel").value = '';
+                } else {
+                    // Erro: exibe mensagem de erro retornada pela API
+                    const erro = await res.json();
+                    mostrarResposta("resposta-criacao", `Erro: ${erro.mensagem || erro.error}`, "error");
+                }
+            } catch (error) {
+                // Erro de conexão
+                mostrarResposta("resposta-criacao", "Erro de conexão. Tente novamente.", "error");
+            }
+
+            // Remove estado de loading
+            botao.classList.remove('loading');
+            botao.disabled = false;
+        }
+
+        /* FUNÇÃO: CANCELAR RESERVA */
+        async function cancelarReserva() {
+            // Obtém referência do botão e ativa estado de loading
+            const botao = document.querySelector('#form-cancelar-reserva .btn-primary');
+            botao.classList.add('loading');
+            botao.disabled = true;
+
+            // Coleta ID da reserva
+            const id = document.getElementById("id_reserva").value;
+            
+            // Validação: ID deve estar preenchido
+            if (!id) {
+                mostrarResposta("cancelamento-resposta", "Digite o ID da reserva", "error");
+                botao.classList.remove('loading');
+                botao.disabled = false;
+                return;
+            }
+
+            try {
+                // Envia requisição DELETE para cancelar reserva
+                const res = await fetch(`/reserva/${id}`, { method: 'DELETE' });
+
+                if (res.ok) {
+                    // Sucesso: exibe mensagem e limpa campo
+                    mostrarResposta("cancelamento-resposta", "Reserva cancelada com sucesso", "success");
+                    document.getElementById("id_reserva").value = '';
+                } else {
+                    // Erro: exibe mensagem de erro retornada pela API
+                    const erro = await res.json();
+                    mostrarResposta("cancelamento-resposta", `Erro: ${erro.mensagem || erro.error}`, "error");
+                }
+            } catch (error) {
+                // Erro de conexão
+                mostrarResposta("cancelamento-resposta", "Erro de conexão. Tente novamente.", "error");
+            }
+
+            // Remove estado de loading
+            botao.classList.remove('loading');
+            botao.disabled = false;
+        }
+
+        /* INICIALIZAÇÃO E ANIMAÇÕES */
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animação de entrada dos cards
+            const cards = document.querySelectorAll('.section-card');
+            
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    // Configura estado inicial (invisível e deslocado)
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(30px)';
+                    card.style.transition = 'all 0.6s ease';
+                    
+                    // Aplica animação de entrada
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 100);
+                }, index * 200); // Delay crescente para cada card
+            });
+
+            // Efeitos de interação nos inputs
+            const inputs = document.querySelectorAll('.form-control, .form-select');
+            inputs.forEach(input => {
+                // Efeito de foco: aumenta ligeiramente o container
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'scale(1.02)';
+                    this.parentElement.style.transition = 'transform 0.3s ease';
+                });
+                
+                // Efeito de blur: retorna ao tamanho normal
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'scale(1)';
+                });
+            });
+        });
+    </script>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

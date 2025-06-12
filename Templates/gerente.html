@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <!-- Metadados básicos da página -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gerente - Relatórios</title>
+    
+    <!-- Importação do Bootstrap para componentes responsivos -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    
+    <style>
+        /* ESTILIZAÇÃO GERAL DA PAGINA */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* CABEÇALHO DA PÁGINA */
+
+        .header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px); /* Efeito de vidro fosco */
+            padding: 2rem;
+            text-align: center;
+            color: #333;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            color: #495057;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            color: #6c757d;
+        }
+
+        /* CAIXA PRINCIPAL E CARDS */
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        /* Card principal com efeito glassmorphism */
+        .main-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        /* Efeito hover no card principal */
+        .main-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        /* BOTÃO VOLTAR */
+
+        .back-button {
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        .back-button:hover {
+            background: #667eea;
+            transform: translateX(-5px);
+            color: white;
+        }
+
+        /* TÍTULOS E SEÇÕES */
+
+        .section-title {
+            color: #495057;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        /* Seção do formulário com fundo diferenciado */
+        .form-section {
+            background: rgba(248, 249, 250, 0.8);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        /* ELEMENTOS DE FORMULÁRIO */
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Estilo dos labels */
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #495057;
+            font-size: 1.1rem;
+        }
+
+        /* Estilo dos inputs e selects */
+        .form-control, .form-select {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 1rem;
+            color: #333;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            max-width: 350px;
+            width: 100%;
+        }
+
+        /* Estado dos inputs (foco) */
+        .form-control:focus, .form-select:focus {
+            background: rgba(255, 255, 255, 1);
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+            color: #333;
+            outline: none;
+        }
+
+        /* Placeholder dos inputs */
+        .form-control::placeholder {
+            color: rgba(0, 0, 0, 0.5);
+        }
+
+        /* Opções do select */
+        .form-select option {
+            background: white;
+            color: #333;
+        }
+
+        /* BOTÕES */
+
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Efeito do botão */
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+            background: linear-gradient(45deg, #764ba2, #667eea);
+        }
+
+        /* Efeito de brilho no botão */
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        /* SISTEMA DE FILTROS */
+
+        .filters-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Grupos de filtros individuais */
+        .filter-group {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        /* Estado ativo do grupo de filtros */
+        .filter-group.active {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: #667eea;
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        /* ÁREA DE RESULTADOS */
+
+        .results-container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            min-height: 200px;
+        }
+
+        /* TABELAS */
+
+        .table-responsive {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .table {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            margin-bottom: 0;
+        }
+
+        /* Cabeçalho da tabela */
+        .table th {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Células da tabela */
+        .table td {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            color: #333;
+        }
+
+        /* Efeito hover nas linhas da tabela */
+        .table tbody tr:hover {
+            background: rgba(102, 126, 234, 0.1);
+            transform: scale(1.01);
+            transition: all 0.3s ease;
+        }
+
+        /* Indicador de carregamento */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            font-size: 1.2rem;
+            color: #6c757d;
+        }
+
+        /* Spinner de carregamento */
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(0, 0, 0, 0.2);
+            border-radius: 50%;
+            border-top-color: #667eea;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 10px;
+        }
+
+        /* Animação do spinner */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Mensagem de erro */
+        .mensagem-erro {
+            background: rgba(220, 53, 69, 0.2);
+            border: 1px solid rgba(220, 53, 69, 0.5);
+            color: #ff6b6b;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        /* Mensagem de sucesso */
+        .mensagem-sucesso {
+            background: rgba(25, 135, 84, 0.2);
+            border: 1px solid rgba(25, 135, 84, 0.5);
+            color: #51cf66;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        /* Mensagem quando não há resultados */
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: #6c757d;
+            font-size: 1.2rem;
+        }
+
+        /* RESPONSIVIDADE MOBILE */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .main-card {
+                padding: 2rem;
+                margin: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .filters-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- CABEÇALHO DA APLICAÇÃO -->
+    <div class="header">
+        <h1>📊 Relatórios - Gerente</h1>
+        <p>Sistema de controle e análise de dados</p>
+    </div>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <div class="container">
+        <!-- Botão para voltar ao menu principal -->
+        <a href="/" class="back-button">← Voltar ao Menu Principal</a>
+
+    <div class="container">
+        <div class="main-card">
+            <h2 class="section-title">Consultar Relatório</h2>
+            
+            <!-- Seção do formulário de filtros -->
+            <div class="form-section">
+                <!-- Seletor do tipo de relatório -->
+                <div class="form-group">
+                    <label for="tipo">Tipo de Relatório:</label>
+                    <select id="tipo" class="form-select">
+                        <option value="periodo">📅 Por Período</option>
+                        <option value="mesa">🍽️ Por Mesa</option>
+                        <option value="garcom">👨‍💼 Por Garçom</option>
+                    </select>
+                </div>
+
+                <!-- Container dos filtros dinâmicos -->
+                <div class="filters-container">
+                    <!-- Filtros para relatório por período -->
+                    <div id="filtros-periodo" class="filter-group active">
+                        <div class="form-group">
+                            <label for="inicio">Data Início:</label>
+                            <input type="date" id="inicio" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="fim">Data Fim:</label>
+                            <input type="date" id="fim" class="form-control" />
+                        </div>
+                    </div>
+
+                    <!-- Filtros para relatório por mesa -->
+                    <div id="filtros-mesa" class="filter-group" style="display:none;">
+                        <div class="form-group">
+                            <label for="mesa">Número da Mesa:</label>
+                            <input type="number" id="mesa" class="form-control" placeholder="Ex: 15" />
+                        </div>
+                    </div>
+
+                    <!-- Filtros para relatório por garçom -->
+                    <div id="filtros-garcom" class="filter-group" style="display:none;">
+                        <div class="form-group">
+                            <label for="garcom">Nome do Garçom:</label>
+                            <input type="text" id="garcom" class="form-control" placeholder="Ex: João Silva" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botão de consulta -->
+                <div class="text-center">
+                    <button onclick="consultarRelatorio()" class="btn-primary">
+                        🔍 Consultar Relatório
+                    </button>
+                </div>
+            </div>
+
+            <!-- Área onde os resultados serão exibidos -->
+            <div id="resultado" class="results-container" style="display:none;"></div>
+        </div>
+    </div>
+
+    <script>
+        /* ========================================
+           INICIALIZAÇÃO E VARIÁVEIS GLOBAIS
+        ======================================== */
+        console.log('Script de relatórios do gerente carregado.');
+
+        // Referências dos elementos DOM principais
+        const tipoSelect = document.getElementById('tipo');
+        const filtrosPeriodo = document.getElementById('filtros-periodo');
+        const filtrosMesa = document.getElementById('filtros-mesa');
+        const filtrosGarcom = document.getElementById('filtros-garcom');
+        const resultadoDiv = document.getElementById('resultado');
+
+        /* ========================================
+           GERENCIAMENTO DE FILTROS DINÂMICOS
+        ======================================== */
+        // Event listener para mudança no tipo de relatório
+        tipoSelect.addEventListener('change', () => {
+            console.log('Tipo de relatório alterado para:', tipoSelect.value);
+            
+            // Oculta todos os grupos de filtros e remove classe ativa
+            document.querySelectorAll('.filter-group').forEach(group => {
+                group.style.display = 'none';
+                group.classList.remove('active');
+            });
+
+            // Exibe o grupo de filtros correspondente ao tipo selecionado
+            if (tipoSelect.value === 'periodo') {
+                filtrosPeriodo.style.display = 'block';
+                filtrosPeriodo.classList.add('active');
+            } else if (tipoSelect.value === 'mesa') {
+                filtrosMesa.style.display = 'block';
+                filtrosMesa.classList.add('active');
+            } else if (tipoSelect.value === 'garcom') {
+                filtrosGarcom.style.display = 'block';
+                filtrosGarcom.classList.add('active');
+            }
+
+            // Limpa resultados anteriores
+            resultadoDiv.style.display = 'none';
+            resultadoDiv.innerHTML = '';
+            
+            // Limpa campos não utilizados
+            if (tipoSelect.value !== 'periodo') {
+                document.getElementById('inicio').value = '';
+                document.getElementById('fim').value = '';
+            }
+            if (tipoSelect.value !== 'mesa') {
+                document.getElementById('mesa').value = '';
+            }
+            if (tipoSelect.value !== 'garcom') {
+                document.getElementById('garcom').value = '';
+            }
+        });
+
+        /* ========================================
+           FUNÇÃO PRINCIPAL DE CONSULTA
+        ======================================== */
+        async function consultarRelatorio() {
+            console.log('Função consultarRelatorio() chamada.');
+            let url = '';
+            const tipo = tipoSelect.value;
+
+            // Constrói a URL baseada no tipo de relatório selecionado
+            if (tipo === 'periodo') {
+                const inicio = document.getElementById('inicio').value;
+                const fim = document.getElementById('fim').value;
+                console.log('Relatório por período - Início:', inicio, 'Fim:', fim);
+                
+                // Validação dos campos obrigatórios
+                if (!inicio || !fim) {
+                    alert('Preencha as datas corretamente.');
+                    return;
+                }
+                url = `/relatorio/periodo?inicio=${inicio}&fim=${fim}`;
+                
+            } else if (tipo === 'mesa') {
+                const mesa = document.getElementById('mesa').value;
+                console.log('Relatório por mesa - Mesa:', mesa);
+                
+                // Validação do campo obrigatório
+                if (!mesa) {
+                    alert('Informe o número da mesa.');
+                    return;
+                }
+                url = `/relatorio/mesa/${mesa}`;
+                
+            } else if (tipo === 'garcom') {
+                const garcom = document.getElementById('garcom').value;
+                console.log('Relatório por garçom - Garçom:', garcom);
+                
+                // Validação do campo obrigatório
+                if (!garcom) {
+                    alert('Informe o nome do garçom.');
+                    return;
+                }
+                url = `/relatorio/garcom/${garcom}`;
+            }
+
+            // Exibe indicador de carregamento
+            resultadoDiv.style.display = 'block';
+            resultadoDiv.innerHTML = '<div class="loading">Carregando dados...</div>';
+            console.log('URL da requisição:', url);
+
+            try {
+                // Faz a requisição para o servidor
+                const res = await fetch(url);
+                console.log('Resposta da requisição:', res);
+                const data = await res.json();
+                console.log('Dados recebidos:', data);
+
+                // Processa a resposta
+                if (res.ok && Array.isArray(data) && data.length > 0) {
+                    // Dados encontrados - exibe a tabela
+                    exibirTabela(data);
+                } else if (res.ok && data.length === 0) {
+                    // Nenhum resultado encontrado
+                    resultadoDiv.innerHTML = '<div class="no-results">📋 Nenhum resultado encontrado para os filtros selecionados.</div>';
+                } else {
+                    // Erro na resposta
+                    resultadoDiv.innerHTML = `<div class="mensagem-erro">❌ Erro: ${JSON.stringify(data)}</div>`;
+                }
+            } catch (error) {
+                // Erro de conexão ou rede
+                console.error('Erro na requisição:', error);
+                resultadoDiv.innerHTML = '<div class="mensagem-erro">🔌 Erro de conexão. Verifique sua internet e tente novamente.</div>';
+            }
+        }
+
+        /* ========================================
+           FUNÇÃO DE EXIBIÇÃO DE DADOS
+        ======================================== */
+        function exibirTabela(dados) {
+            console.log('Função exibirTabela() chamada com dados:', dados);
+            let tabelaHTML = '<div class="table-responsive"><table class="table"><thead><tr>';
+
+            // Verifica se há dados para processar
+            if (dados.length > 0) {
+                // Cria cabeçalhos da tabela baseado nas chaves do primeiro objeto
+                Object.keys(dados[0]).forEach(chave => {
+                    tabelaHTML += `<th>${chave}</th>`;
+                });
+            } else {
+                // Não há dados para exibir
+                resultadoDiv.innerHTML = '<div class="mensagem-erro">📊 Nenhum dado para exibir na tabela.</div>';
+                return;
+            }
+
+            tabelaHTML += '</tr></thead><tbody>';
+
+            // Cria as linhas da tabela com os dados
+            dados.forEach(item => {
+                tabelaHTML += '<tr>';
+                Object.values(item).forEach(valor => {
+                    tabelaHTML += `<td>${valor}</td>`;
+                });
+                tabelaHTML += '</tr>';
+            });
+
+            tabelaHTML += '</tbody></table></div>';
+
+            // Insere a tabela no DOM
+            resultadoDiv.innerHTML = tabelaHTML;
+        }
+
+        /* EFEITOS VISUAIS E INTERATIVIDADE */
+        // Adiciona efeitos visuais aos elementos de formulário
+        document.addEventListener('DOMContentLoaded', function() {
+            const formControls = document.querySelectorAll('.form-control, .form-select');
+            
+            // Adiciona efeito de escala no foco dos campos
+            formControls.forEach(control => {
+                control.addEventListener('focus', function() {
+                    this.style.transform = 'scale(1.02)';
+                });
+                
+                control.addEventListener('blur', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+        });
+    </script>
+
+    <!-- Importação do JavaScript do Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
