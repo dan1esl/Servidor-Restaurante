@@ -5,14 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Restaurante</title>
     <style>
-        /* ESTILIZAÇÃO GERAL DA PAGINA */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* Configuração do corpo da página */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -21,7 +19,6 @@
             flex-direction: column;
         }
 
-        /* CABEÇALHO DA PÁGINA */
 
         .header {
             background: rgba(255, 255, 255, 0.1);
@@ -43,7 +40,6 @@
             opacity: 0.9;
         }
 
-        /* CAIXA PRINCIPAL */
 
         .container {
             flex: 1;
@@ -53,7 +49,6 @@
             padding: 2rem;
         }
 
-        /* ÁREA DE SELEÇÃO DE PERFIS */
 
         .selection-area {
             display: none; 
@@ -73,7 +68,6 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
-        /* Grade responsiva para os botões */
         .buttons-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -81,10 +75,8 @@
             margin: 2rem 0;
         }
 
-        /* BOTÕES DE PERFIL */
 
         .role-button {
-            /* Efeito glassmorphism */
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
             border: 2px solid rgba(255, 255, 255, 0.2);
@@ -101,15 +93,13 @@
             overflow: hidden;
         }
 
-        /* Efeito nos botões */
         .role-button:hover {
-            transform: translateY(-10px); /* Elevação */
+            transform: translateY(-10px); 
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
             background: rgba(255, 255, 255, 0.25);
             border-color: rgba(255, 255, 255, 0.4);
         }
 
-        /* Efeito de brilho que passa pelo botão */
         .role-button::before {
             content: '';
             position: absolute;
@@ -121,26 +111,22 @@
             transition: left 0.5s;
         }
 
-        /* Efeito de brilho no hover */
         .role-button:hover::before {
             left: 100%;
         }
 
-        /* Ícone do perfil */
         .role-icon {
             font-size: 3rem;
             margin-bottom: 1rem;
             display: block;
         }
 
-        /* Descrição do perfil */
         .role-description {
             font-size: 1rem;
             opacity: 0.8;
             margin-top: 0.5rem;
         }
 
-        /* ÁREA DO ATENDENTE (CHAT) */
 
         .attendant-area {
             background: rgba(255, 255, 255, 0.1);
@@ -152,7 +138,6 @@
             width: 100%;
         }
 
-        /* Botão de voltar */
         .back-button {
             background: rgba(255, 255, 255, 0.2);
             border: none;
@@ -179,7 +164,6 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* MENSAGENS */
 
         .message {
             margin: 1rem 0;
@@ -199,7 +183,6 @@
             margin-right: auto;
         }
 
-        /* ÁREA DE INPUT DO CHAT */
 
         .input-area {
             display: flex;
@@ -207,7 +190,6 @@
             margin-top: 1rem;
         }
 
-        /* Campo de input */
         .message-input {
             flex: 1;
             padding: 1rem;
@@ -218,12 +200,10 @@
             font-size: 1rem;
         }
 
-        /* Placeholder do input */
         .message-input::placeholder {
             color: rgba(255, 255, 255, 0.7);
         }
 
-        /* Botão de enviar mensagem */
         .send-button {
             background: rgba(102, 126, 234, 0.8);
             border: none;
@@ -240,7 +220,6 @@
             transform: scale(1.05); 
         }
 
-        /* PLACEHOLDER */
 
         .placeholder-area {
             background: rgba(255, 255, 255, 0.1);
@@ -263,7 +242,6 @@
             opacity: 0.8;
         }
 
-        /* RESPONSIVIDADE */
 
         @media (max-width: 768px) {
             .buttons-grid {
@@ -285,37 +263,31 @@
     </style>
 </head>
 <body>
-    <!-- CABEÇALHO -->
 
     <div class="header">
         <h1>🍽️ Sistema de Restaurante</h1>
         <p>Selecione seu perfil de acesso</p>
     </div>
 
-    <!-- CAIXA PRINCIPAL -->
 
     <div class="container">
         
         <div id="selection" class="selection-area active">
             <h2 class="selection-title">Escolha seu perfil de acesso:</h2>
             
-            <!-- Grid com botões dos perfis -->
             <div class="buttons-grid">
-                <!-- Botão Atendente -->
                 <a href="/atendente" class="role-button">
                     <span class="role-icon">👥</span>
                     <div>ATENDENTE</div>
                     <div class="role-description">Criar e Deletar Reservas</div>
                 </a>
                 
-                <!-- Botão Garçom -->
                 <a href="/garcom" class="role-button">
                     <span class="role-icon">🍽️</span>
                     <div>GARÇOM</div>
                     <div class="role-description">Confirmar Reservas</div>
                 </a>
                 
-                <!-- Botão Gerente -->
                 <a href="/gerente" class="role-button">
                     <span class="role-icon">📊</span>
                     <div>GERENTE</div>
@@ -325,24 +297,16 @@
         </div>
     </div>
 
-    <!-- INTERAÇÕES -->
     <script>
-        // Aguarda o carregamento completo da página
         document.addEventListener('DOMContentLoaded', function() {
-            // Seleciona todos os botões de perfil
             const buttons = document.querySelectorAll('.role-button');
             
-            // Adiciona eventos para cada botão
             buttons.forEach(button => {
-                // Quando o mouse entra no botão
                 button.addEventListener('mouseenter', function() {
-                    // Aplica transformação: elevação + pequeno aumento
                     this.style.transform = 'translateY(-10px) scale(1.02)';
                 });
                 
-                // Quando o mouse sai do botão
                 button.addEventListener('mouseleave', function() {
-                    // Retorna ao estado original
                     this.style.transform = 'translateY(0) scale(1)';
                 });
             });

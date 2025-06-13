@@ -1,24 +1,9 @@
-# =============================================
-# CLIENTE DE RELATÓRIOS - SISTEMA DE RESERVAS
-# Script para gerar relatórios do sistema de reservas
-# =============================================
-
-# =============================================
-# IMPORTAÇÕES
-# =============================================
 
 from datetime import datetime
 import requests
 
-# =============================================
-# CONFIGURAÇÕES
-# =============================================
 
-BASE_URL = 'http://localhost:5000'  # URL base da API
-
-# =============================================
-# FUNÇÕES AUXILIARES
-# =============================================
+BASE_URL = 'http://localhost:5000'  
 
 def get_json_safe(url):
     """
@@ -31,27 +16,21 @@ def get_json_safe(url):
         list: Lista com os dados JSON ou lista vazia em caso de erro
     """
     try:
-        # Fazer requisição HTTP GET
         response = requests.get(url)
         
-        # Verificar se a requisição foi bem-sucedida
         if response.status_code == 200:
             try:
-                # Tentar converter resposta para JSON
                 return response.json()
             except ValueError:
-                # Erro ao fazer parse do JSON
                 print("❌ Erro: Resposta não é JSON válido.")
                 print(f"Resposta recebida: {response.text}")
                 return []
         else:
-            # Erro HTTP (4xx, 5xx)
             print(f"❌ Erro HTTP: Status {response.status_code}")
             print(f"Resposta: {response.text}")
             return []
             
     except requests.RequestException as e:
-        # Erro de conexão ou timeout
         print(f"❌ Erro na requisição: {e}")
         return []
 
@@ -102,15 +81,11 @@ def exibir_reservas(reservas, titulo):
         print(f"   👤 Responsável: {reserva.get('responsavel', 'N/A')}")
         print(f"   📋 Status: {reserva.get('status', 'N/A')}")
         
-        # Exibir garçom apenas se houver
         if reserva.get('garcom'):
             print(f"   🧑‍💼 Garçom: {reserva.get('garcom')}")
         
         print("-" * 40)
 
-# =============================================
-# FUNÇÕES DE RELATÓRIO
-# =============================================
 
 def relatorio_por_periodo():
     """
@@ -119,19 +94,15 @@ def relatorio_por_periodo():
     print("\n=== RELATÓRIO POR PERÍODO ===")
     
     try:
-        # Coletar datas do usuário
         inicio = input("📅 Data início (DD-MM-YYYY): ")
         fim = input("📅 Data fim (DD-MM-YYYY): ")
         
-        # Converter datas para formato ISO
         inicio_formatado = formatar_data(inicio)
         fim_formatado = formatar_data(fim)
         
-        # Fazer requisição para a API
         url = f'{BASE_URL}/relatorio/periodo?inicio={inicio_formatado}&fim={fim_formatado}'
         reservas = get_json_safe(url)
         
-        # Exibir resultados
         titulo = f"RESERVAS DE {inicio} A {fim}"
         exibir_reservas(reservas, titulo)
         
@@ -147,19 +118,15 @@ def relatorio_por_mesa():
     print("\n=== RELATÓRIO POR MESA ===")
     
     try:
-        # Coletar número da mesa
         mesa = input("🪑 Número da mesa: ")
         
-        # Validar se é um número
         if not mesa.isdigit():
             print("❌ Número da mesa deve ser um valor numérico")
             return
         
-        # Fazer requisição para a API
         url = f'{BASE_URL}/relatorio/mesa/{mesa}'
         reservas = get_json_safe(url)
         
-        # Exibir resultados
         titulo = f"RESERVAS DA MESA {mesa}"
         exibir_reservas(reservas, titulo)
         
@@ -173,28 +140,22 @@ def relatorio_por_garcom():
     print("\n=== RELATÓRIO POR GARÇOM ===")
     
     try:
-        # Coletar nome do garçom
         nome = input("🧑‍💼 Nome do garçom: ")
         
-        # Validar se o nome não está vazio
         if not nome.strip():
             print("❌ Nome do garçom não pode estar vazio")
             return
         
-        # Fazer requisição para a API
         url = f'{BASE_URL}/relatorio/garcom/{nome}'
         reservas = get_json_safe(url)
         
-        # Exibir resultados
         titulo = f"RESERVAS CONFIRMADAS POR {nome.upper()}"
         exibir_reservas(reservas, titulo)
         
     except KeyboardInterrupt:
         print("\n⚠️ Operação cancelada pelo usuário")
 
-# =============================================
-# PROGRAMA PRINCIPAL
-# =============================================
+
 
 def exibir_menu():
     """
@@ -230,8 +191,7 @@ def main():
                 break
             else:
                 print("❌ Opção inválida! Escolha um número de 0 a 3.")
-            
-            # Pausa para o usuário visualizar o resultado
+        
             if opcao in ['1', '2', '3']:
                 input("\n⏸️  Pressione ENTER para continuar...")
                 
@@ -241,8 +201,6 @@ def main():
         except Exception as e:
             print(f"❌ Erro inesperado: {e}")
             input("\n⏸️  Pressione ENTER para continuar...")
-
-# EXECUÇÃO DO PROGRAMA
 
 if __name__ == "__main__":
     try:

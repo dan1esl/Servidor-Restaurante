@@ -5,74 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Garçom - Confirmar Reservas</title>
     <style>
-        /* ========================================
-           RESET CSS E CONFIGURAÇÕES GLOBAIS
-           ======================================== */
-        
-        /* Remove margens e padding padrão de todos os elementos */
+
         * {
             margin: 0;
             padding: 0;
-            box-sizing: border-box; /* Inclui padding e border no cálculo do tamanho */
+            box-sizing: border-box; 
         }
 
-        /* Configurações gerais do body */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f8f9fa; /* Cor de fundo cinza claro */
-            min-height: 100vh; /* Altura mínima da tela */
+            background: #f8f9fa; 
+            min-height: 100vh; 
             display: flex;
-            flex-direction: column; /* Layout em coluna */
+            flex-direction: column; 
             color: #333;
         }
 
-        /* ========================================
-           ESTRUTURA DO CABEÇALHO
-           ======================================== */
-        
+     
         .header {
             background: white;
-            padding: 2rem; /* 32px de espaçamento interno */
+            padding: 2rem; 
             text-align: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
-            border-bottom: 3px solid #667eea; /* Borda inferior colorida */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+            border-bottom: 3px solid #667eea; 
         }
 
         .header h1 {
-            font-size: 2.5rem; /* 40px */
+            font-size: 2.5rem; 
             margin-bottom: 0.5rem;
             color: #333;
-            font-weight: 700; /* Negrito */
+            font-weight: 700; 
         }
 
         .header p {
-            font-size: 1.2rem; /* 19.2px */
-            color: #666; /* Cinza médio */
+            font-size: 1.2rem; 
+            color: #666; 
         }
 
-        /* ========================================
-           LAYOUT PRINCIPAL
-           ======================================== */
-        
         .container {
-            flex: 1; /* Ocupa o espaço restante */
+            flex: 1; 
             display: flex;
-            justify-content: center; /* Centraliza horizontalmente */
-            align-items: flex-start; /* Alinha no topo */
+            justify-content: center; 
+            align-items: flex-start; 
             padding: 2rem;
         }
 
         .main-content {
             background: white;
-            border-radius: 15px; /* Bordas arredondadas */
+            border-radius: 15px; 
             padding: 2rem;
-            max-width: 1200px; /* Largura máxima */
+            max-width: 1200px; 
             width: 100%;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); /* Sombra mais intensa */
-            border: 1px solid #e9ecef; /* Borda sutil */
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e9ecef; 
         }
 
-        /* BOTÃO VOLTAR */
         
         .back-button {
             background: white;
@@ -95,7 +82,6 @@
             color: white;
         }
 
-        /* TÍTULOS E TEXTOS */
         
         .section-title {
             font-size: 2rem; 
@@ -111,7 +97,6 @@
             line-height: 1.6; 
         }
         
-        /* tabela com estilo de card */
         .table-container {
             background: white;
             border-radius: 12px;
@@ -121,14 +106,12 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); 
         }
 
-        /* Configurações da tabela */
         table {
             width: 100%;
             border-collapse: collapse; 
             background-color: transparent;
         }
 
-        /* Estilo de th e td */
         th, td {
             padding: 15px; 
             text-align: left; 
@@ -136,7 +119,6 @@
             color: #333;
         }
 
-        /* Estilo do cabeçalho da tabela */
         th {
             background: #f8f9fa; 
             font-weight: 600;
@@ -146,7 +128,7 @@
             font-size: 0.9rem; 
         }
 
-        /* Efeito das linhas da tabela */
+
         tr:hover {
             background: #f8f9fa !important; 
             cursor: pointer; 
@@ -154,16 +136,13 @@
             transition: all 0.3s ease;
         }
 
-        /* Linha selecionada pelo usuário */
+
         tr.selected {
             background: #e3f2fd !important; 
             border-left: 4px solid #667eea; 
             box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2); 
         }
 
-        /* FORMULÁRIO */
-        
-        /* Container do formulário */
         .form-section {
             background: #f8f9fa; 
             border-radius: 12px;
@@ -175,8 +154,7 @@
             .form-group {
             margin-bottom: 1.5rem;
         }
-
-        /* Estilo dos labels */
+    
         label {
             display: block; 
             margin-bottom: 0.5rem;
@@ -184,7 +162,6 @@
             color: #333;
         }
 
-        /* Campo de entrada de texto */
         input {
             width: 100%;
             max-width: 400px; 
@@ -194,22 +171,20 @@
             background: white;
             color: #333;
             font-size: 1rem;
-            transition: all 0.3s ease; /* Transição para efeitos*/
+            transition: all 0.3s ease; 
         }
 
-        /* Texto fixo (placeholder) */
         input::placeholder {
-            color: #adb5bd; /* Cinza médio */
+            color: #adb5bd; 
         }
 
-        /* quando usuário clica/digita */
+
         input:focus {
-            outline: none; /* Remove contorno padrão do browser */
-            border-color: #667eea; /* Borda azul */
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); /* Glow azul */
+            outline: none; 
+            border-color: #667eea; 
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); 
         }
 
-        /* BOTÃO DE AÇÃO PRINCIPAL */
         
         .confirm-button {
             background: #667eea;
@@ -225,21 +200,18 @@
             overflow: hidden; 
         }
 
-        /* Efeito hover apenas quando botão está ativo */
         .confirm-button:hover:not(:disabled) {
             background: #5a6fd8; 
             transform: translateY(-2px); 
             box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3); 
         }
 
-        /* Estado desabilitado do botão */
         .confirm-button:disabled {
             background: #dee2e6; 
             cursor: not-allowed; 
             color: #6c757d; 
         }
 
-        /* Efeito de brilho animado */
         .confirm-button::before {
             content: ''; 
             position: absolute;
@@ -251,47 +223,38 @@
             transition: left 0.5s; 
         }
 
-        /* Animação do brilho no hover */
         .confirm-button:hover:not(:disabled)::before {
             left: 100%; 
         }
 
-        /* SISTEMA DE FEEDBACK */
-        
-        /* Base para todas as mensagens */
         .message {
             margin-top: 1.5rem;
             padding: 1rem;
             border-radius: 8px;
             font-weight: 500;
-            display: none; /* Oculto por padrão - JavaScript controla */
+            display: none;
         }
 
-        /* Mensagem de sucesso (verde) */
         .message.success {
-            background: #d4edda; /* Fundo verde claro */
-            border: 1px solid #c3e6cb; /* Borda verde */
-            color: #155724; /* Texto verde escuro */
+            background: #d4edda; 
+            border: 1px solid #c3e6cb; 
+            color: #155724; 
             display: block;
         }
 
-        /* Mensagem de erro (vermelho) */
         .message.error {
-            background: #f8d7da; /* Fundo vermelho claro */
-            border: 1px solid #f5c6cb; /* Borda vermelha */
-            color: #721c24; /* Texto vermelho escuro */
+            background: #f8d7da; 
+            border: 1px solid #f5c6cb; 
+            color: #721c24;
             display: block;
         }
 
-        /* Mensagem de carregamento (cinza) */
         .loading {
             color: #6c757d;
             display: block;
             background: #e9ecef;
             border: 1px solid #dee2e6;
         }
-
-        /* ESTADO VAZIO DA TABELA */
         
         .empty-state {
             text-align: center;
@@ -305,8 +268,7 @@
             color: #495057;
         }
 
-        
-        /* Estilos para telas menores que 768px (tablets/celulares) */
+    
         @media (max-width: 768px) {
             .container {
                 padding: 1rem; 
@@ -325,7 +287,7 @@
             }
             
             table {
-                font-size: 0.9rem; /* Texto da tabela menor */
+                font-size: 0.9rem;
             }
             
             th, td {
@@ -335,28 +297,22 @@
     </style>
 </head>
 <body>
-    <!-- ESTRUTURA HTML DA PÁGINA -->
-    
-    <!-- Cabeçalho da aplicação -->
+
     <div class="header">
         <h1>🍽️ Sistema de Restaurante</h1>
         <p>Área do Garçom - Confirmar Reservas</p>
     </div>
 
-    <!-- Container principal da aplicação -->
+
     <div class="container">
         <div class="main-content">
-            <!-- Navegação - Botão de voltar -->
             <a href="/" class="back-button">← Voltar ao Menu Principal</a>
             
-            <!-- Seção de título e descrição -->
             <h2 class="section-title">Confirmar Reserva</h2>
             <p class="description">Selecione uma reserva disponível na tabela abaixo e informe seu nome para confirmar.</p>
 
-            <!-- Tabela de reservas disponíveis -->
             <div class="table-container">
                 <table id="tabela-reservas">
-                    <!-- Cabeçalho da tabela -->
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -368,24 +324,20 @@
                         </tr>
             
                     </thead>
-                    <!-- Corpo da tabela (preenchido pelo JavaScript) -->
                     <tbody></tbody>
                 </table>
             </div>
 
-            <!-- Formulário de confirmação -->
             <div class="form-section">
                 <div class="form-group">
                     <label for="nome-garcom">Nome do Garçom:</label>
                     <input type="text" id="nome-garcom" placeholder="Digite seu nome completo" />
                 </div>
 
-                <!-- Botão de confirmação -->
                 <button id="btn-confirmar" class="confirm-button" disabled>
                     Confirmar Reserva Selecionada
                 </button>
 
-                <!-- Área de mensagens de feedback -->
                 <div id="mensagem" class="message"></div>
             </div>
         </div>
@@ -393,19 +345,15 @@
 
     <script>
         
-        // Captura elementos do DOM que serão manipulados
-        const tabelaBody = document.querySelector('#tabela-reservas tbody'); // Corpo da tabela
-        const btnConfirmar = document.getElementById('btn-confirmar'); // Botão de confirmação
-        const inputGarcom = document.getElementById('nome-garcom'); // Campo de entrada do nome
-        const mensagemDiv = document.getElementById('mensagem'); // Div para mensagens
-        
-        // Variável para armazenar o ID da reserva selecionada
+        const tabelaBody = document.querySelector('#tabela-reservas tbody'); 
+        const btnConfirmar = document.getElementById('btn-confirmar'); 
+        const inputGarcom = document.getElementById('nome-garcom'); 
+        const mensagemDiv = document.getElementById('mensagem'); 
+     
         let reservaSelecionadaId = null;
-
-        // FUNÇÕES UTILITÁRIAS 
+ 
 
         function formatarData(dataString) {
-            // Verifica se a data existe
             if (!dataString) return dataString;
             
             if (dataString.includes('/')) return dataString;
@@ -413,49 +361,36 @@
             if (dataString.includes('-') && dataString.length === 10) {
                 const partes = dataString.split('-');
                 if (partes.length === 3) {
-                    // Reorganiza: [YYYY, MM, DD] -> DD/MM/YYYY
                     return `${partes[2]}/${partes[1]}/${partes[0]}`;
                 }
             }
             
-            // Se não conseguir formatar, retorna o original
             return dataString;
         }
 
-        // FUNÇÕES DE COMUNICAÇÃO COM SERVIDOR 
 
         async function carregarReservas() {
-            // Mostra mensagem de carregamento
             mensagemDiv.className = 'message loading';
             mensagemDiv.textContent = 'Carregando reservas...';
             
             try {
-                // Faz requisição HTTP para o servidor
                 const res = await fetch('/reservas-disponiveis');
                 
-                // Verifica se a requisição foi bem-sucedida
                 if (!res.ok) throw new Error('Erro ao carregar reservas');
                 
-                // Converte resposta para JSON
                 const reservas = await res.json();
                 
-                // Verifica se há reservas disponíveis
                 if (reservas.length === 0) {
-                    // Mostra estado vazio na tabela
                     tabelaBody.innerHTML = '<tr><td colspan="6" class="empty-state"><h3>🍽️</h3><p>Nenhuma reserva disponível no momento.</p></td></tr>';
                     btnConfirmar.disabled = true;
                     mensagemDiv.style.display = 'none';
                     return;
                 }
                 
-                // Limpa tabela antes de popular
                 tabelaBody.innerHTML = '';
                 
-                // Itera sobre cada reserva e cria linha na tabela
                 reservas.forEach(r => {
-                    const tr = document.createElement('tr'); // Cria elemento <tr>
-                    
-                    // Define conteúdo HTML da linha
+                    const tr = document.createElement('tr'); 
                     tr.innerHTML = `
                         <td>${r.id}</td>
                         <td>${formatarData(r.data)}</td>
@@ -465,49 +400,40 @@
                         <td>${r.responsavel}</td>
                     `;
                     
-                    // Adiciona evento de clique na linha
                     tr.addEventListener('click', () => {
-                        console.log('Linha clicada, ID:', r.id); // Debug
+                        console.log('Linha clicada, ID:', r.id); 
                         selecionarReserva(tr, r.id);
                     });
                     
-                    // Adiciona linha à tabela
+
                     tabelaBody.appendChild(tr);
                 });
                 
-                console.log('Reservas carregadas:', reservas); // Debug
+                console.log('Reservas carregadas:', reservas);
                 
-                // Desabilita botão (ainda não há seleção)
                 btnConfirmar.disabled = true;
                 mensagemDiv.style.display = 'none';
                 
             } catch (error) {
-                // Trata erros de conexão ou servidor
                 mensagemDiv.textContent = 'Erro ao carregar reservas. Tente novamente.';
                 mensagemDiv.className = 'message error';
-                console.error('Erro ao carregar reservas:', error); // Debug
+                console.error('Erro ao carregar reservas:', error);
             }
         }
 
-        // FUNÇÕES DE INTERAÇÃO COM USUÁRIO 
         
         function selecionarReserva(tr, id) {
-            // Remove seleção de todas as linhas
             [...tabelaBody.querySelectorAll('tr')].forEach(linha => 
                 linha.classList.remove('selected')
             );
             
-            // Adiciona classe 'selected' à linha clicada
             tr.classList.add('selected');
-            
-            // Armazena ID da reserva selecionada
+
             reservaSelecionadaId = id;
-            console.log('Reserva selecionada, ID:', reservaSelecionadaId); // Debug
+            console.log('Reserva selecionada, ID:', reservaSelecionadaId);
             
-            // Atualiza estado do botão
             atualizarBotaoConfirmar();
             
-            // Esconde mensagens anteriores
             mensagemDiv.style.display = 'none';
         }
 
@@ -515,11 +441,9 @@
             const nomePreenchido = inputGarcom.value.trim().length > 0;
             const reservaSelecionada = reservaSelecionadaId !== null;
             
-            // Habilita botão apenas se ambas condições forem verdadeiras
             const shouldEnable = reservaSelecionada && nomePreenchido;
             btnConfirmar.disabled = !shouldEnable;
             
-            // Debug para acompanhar estado
             console.log('Atualizar botão - reserva:', reservaSelecionadaId, 'nome:', inputGarcom.value, 'disabled:', btnConfirmar.disabled);
         }
 
@@ -527,14 +451,12 @@
         inputGarcom.addEventListener('input', atualizarBotaoConfirmar);
 
         btnConfirmar.addEventListener('click', async () => {
-            // Verifica se reserva foi selecionada
             if (!reservaSelecionadaId) {
                 mensagemDiv.textContent = 'Por favor, selecione uma reserva na tabela.';
                 mensagemDiv.className = 'message error';
                 return;
             }
             
-            // Verifica se nome foi preenchido
             const garcomNome = inputGarcom.value.trim();
             if (!garcomNome) {
                 mensagemDiv.textContent = 'Por favor, informe o nome do garçom.';
@@ -542,69 +464,53 @@
                 return;
             }
 
-            // Desabilita botão durante processamento
             btnConfirmar.disabled = true;
             
-            // Mostra mensagem de carregamento
             mensagemDiv.textContent = 'Confirmando reserva...';
             mensagemDiv.className = 'message loading';
 
             try {
-                // Faz requisição POST para confirmar reserva
                 const res = await fetch(`/confirmar/${reservaSelecionadaId}`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({ garcom: garcomNome })
                 });
                 
-                // Converte resposta para JSON
                 const data = await res.json();
                 
                 if (res.ok) {
-                    // Mostra mensagem de sucesso
                     mensagemDiv.textContent = data.mensagem || 'Reserva confirmada com sucesso!';
                     mensagemDiv.className = 'message success';
                     
-                    // Limpa formulário
                     reservaSelecionadaId = null;
                     inputGarcom.value = '';
                     btnConfirmar.disabled = true;
                     
-                    // Recarrega lista de reservas
                     carregarReservas();
                 } else {
-                    // Mostra mensagem de erro do servidor
                     mensagemDiv.textContent = data.mensagem || data.error || 'Erro ao confirmar reserva.';
                     mensagemDiv.className = 'message error';
-                    btnConfirmar.disabled = false; // Reabilita botão
+                    btnConfirmar.disabled = false; 
                 }
             } catch (error) {
-                // Mostra mensagem de erro de conexão
                 mensagemDiv.textContent = 'Erro na conexão. Tente novamente.';
                 mensagemDiv.className = 'message error';
-                btnConfirmar.disabled = false; // Reabilita botão
+                btnConfirmar.disabled = false; 
             }
         });
 
-        // INICIALIZAÇÃO DA APLICAÇÃO
-        
-        // Carrega reservas quando página carrega
+
         carregarReservas();
 
-        // EFEITOS VISUAIS 
-        
-        // Adiciona efeitos de hover mais suaves na tabela
         document.addEventListener('DOMContentLoaded', function() {
             const table = document.getElementById('tabela-reservas');
-            
-            // Efeito de escala no hover
+
             table.addEventListener('mouseover', function(e) {
                 if (e.target.tagName === 'TD') {
                     e.target.parentElement.style.transform = 'scale(1.005)';
                 }
             });
             
-            // Remove efeito quando mouse sai
             table.addEventListener('mouseout', function(e) {
                 if (e.target.tagName === 'TD') {
                     e.target.parentElement.style.transform = 'scale(1)';

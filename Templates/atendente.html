@@ -5,18 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Reservas - Atendente</title>
 
-    <!-- Bootstrap CSS Framework -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 
     <style>
-        /* RESET CSS E CONFIGURAÇÕES GLOBAIS */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* Configuração principal do corpo da página */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
@@ -24,7 +21,6 @@
             color: #333;
         }
 
-        /* CABEÇALHO DA PÁGINA */
         .header {
             background: white;
             backdrop-filter: blur(10px);
@@ -49,14 +45,12 @@
             color: #6c757d;
         }
 
-        /* CONTAINER PRINCIPAL */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
         }
 
-        /* BOTÃO DE VOLTAR */
         .back-button {
             background: white;
             border: 2px solid #667eea;
@@ -78,7 +72,6 @@
             color: white;
         }
 
-        /* CARDS DE SEÇÕES (CRIAR/CANCELAR RESERVAS) */
         .section-card {
             background: white;
             border: 2px solid #e9ecef;
@@ -89,18 +82,15 @@
             position: relative;
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            /* Borda colorida na lateral esquerda */
             border-left: 5px solid #667eea;
         }
 
-        /* Efeito hover dos cards */
         .section-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
             border-color: #667eea;
         }
 
-        /* Efeito de brilho que passa pelo card */
         .section-card::before {
             content: '';
             position: absolute;
@@ -116,7 +106,6 @@
             left: 100%;
         }
 
-        /* Títulos das seções */
         .section-card h2 {
             color: #333;
             font-size: 1.8rem;
@@ -127,22 +116,17 @@
             gap: 0.5rem;
         }
 
-        /* Ícones das seções */
         .section-icon {
             font-size: 2rem;
             color: #667eea;
         }
 
-        /* FORMULÁRIOS E INPUTS */
-        
-        /* Labels dos formulários */
         .form-label {
             color: #495057;
             font-weight: 600;
             margin-bottom: 0.5rem;
         }
 
-        /* Inputs e selects */
         .form-control, .form-select {
             background: white;
             border: 2px solid #e9ecef;
@@ -152,13 +136,11 @@
             transition: all 0.3s ease;
         }
 
-        /* Efeito hover nos inputs */
         .form-control:hover, .form-select:hover {
             border-color: #adb5bd;
             background: #f8f9fa;
         }
 
-        /* Efeito focus nos inputs */
         .form-control:focus, .form-select:focus {
             background: white;
             border-color: #667eea;
@@ -166,18 +148,15 @@
             color: #333;
         }
 
-        /* Placeholder dos inputs */
         .form-control::placeholder {
             color: #6c757d;
         }
 
-        /* Opções dos selects */
         .form-select option {
             background: white;
             color: #333;
         }
 
-        /* BOTÕES PRINCIPAIS */
         .btn-primary {
             background: linear-gradient(45deg, #667eea, #764ba2);
             border: none;
@@ -199,7 +178,6 @@
             background: linear-gradient(45deg, #5a6fd8, #6a42a0);
         }
 
-        /* Efeito de brilho nos botões */
         .btn-primary::before {
             content: '';
             position: absolute;
@@ -215,7 +193,6 @@
             left: 100%;
         }
 
-        /* Botões secundários */
         .btn-outline-secondary {
             background: white;
             border: 2px solid #6c757d;
@@ -232,7 +209,6 @@
             transform: translateY(-2px);
         }
 
-        /* MENSAGENS DE RESPOSTA */
         #resposta-criacao, #cancelamento-resposta {
             margin-top: 1rem;
             padding: 1rem;
@@ -241,23 +217,18 @@
             transition: all 0.3s ease;
         }
 
-        /* Mensagens de sucesso */
         .success {
             background: rgba(40, 167, 69, 0.1);
             border: 2px solid #28a745;
             color: #28a745;
         }
 
-        /* Mensagens de erro */
         .error {
             background: rgba(220, 53, 69, 0.1);
             border: 2px solid #dc3545;
             color: #dc3545;
         }
 
-        /* ANIMAÇÕES */
-        
-        /* Animação de fade in */
         .fade-in {
             animation: fadeIn 0.5s ease-in;
         }
@@ -267,12 +238,10 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Estado de loading dos botões */
         .loading {
             position: relative;
         }
 
-        /* Spinner de loading */
         .loading::after {
             content: '';
             position: absolute;
@@ -292,7 +261,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* RESPONSIVIDADE MOBILE */
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2rem;
@@ -317,28 +285,24 @@
     </style>
 </head>
 <body>
-    <!-- CABEÇALHO DA PÁGINA -->
     <div class="header">
         <h1>🍽️ Sistema de Reservas</h1>
         <p>Painel do Atendente</p>
     </div>
 
-    <!-- CONTAINER PRINCIPAL -->
     <div class="container">
-        <!-- Botão para voltar ao menu principal -->
+
         <a href="/" class="back-button">← Voltar ao Menu Principal</a>
 
-        <!-- SEÇÃO: CRIAR RESERVA -->
         <div class="section-card fade-in">
             <h2><span class="section-icon">➕</span> Criar Reserva</h2>
             <form id="form-criar-reserva" class="row g-3">
-                <!-- Campo: Data -->
+
                 <div class="col-md-6">
                     <label for="data" class="form-label">Data (DD/MM/AAAA):</label>
                     <input type="text" id="data" class="form-control" placeholder="13/06/2025" />
                 </div>
                 
-                <!-- Campo: Hora -->
                 <div class="col-md-6">
                     <label for="hora" class="form-label">Hora:</label>
                     <select id="hora" class="form-select">
@@ -368,12 +332,11 @@
                     </select>
                 </div>
                 
-                <!-- Campo: Mesa -->
+
                 <div class="col-md-4">
                     <label for="mesa" class="form-label">Mesa:</label>
                     <select id="mesa" class="form-select">
-                        <option value="">Selecione a mesa</option>
-                        <!-- Opções de mesa de 1 a 20 -->
+                        <option value="">Selecione a mesa</option>                   
                         <option value="1">Mesa 1</option>
                         <option value="2">Mesa 2</option>
                         <option value="3">Mesa 3</option>
@@ -397,12 +360,10 @@
                     </select>
                 </div>
                 
-                <!-- Campo: Quantidade de pessoas -->
                 <div class="col-md-4">
                     <label for="pessoas" class="form-label">Quantidade de pessoas:</label>
                     <select id="pessoas" class="form-select">
                         <option value="">Selecione</option>
-                        <!-- Opções de 1 a 20 pessoas -->
                         <option value="1">1 pessoa</option>
                         <option value="2">2 pessoas</option>
                         <option value="3">3 pessoas</option>
@@ -418,52 +379,41 @@
                         <option value="13">13 pessoas</option>
                         <option value="14">14 pessoas</option>
                         <option value="15">15 pessoas</option>
-                        <option value="16">16 pessoas</option>
-                        <option value="17">17 pessoas</option>
-                        <option value="18">18 pessoas</option>
-                        <option value="19">19 pessoas</option>
-                        <option value="20">20 pessoas</option>
+
                     </select>
                 </div>
                 
-                <!-- Campo: Nome do responsável -->
                 <div class="col-md-4">
                     <label for="responsavel" class="form-label">Nome do responsável:</label>
                     <input type="text" id="responsavel" class="form-control" />
                 </div>
                 
-                <!-- Botão de criar reserva -->
                 <div class="col-12">
                     <button type="button" class="btn btn-primary" onclick="criarReserva()">
                         ✨ Criar Reserva
                     </button>
                 </div>
                 
-                <!-- Área de resposta para criação -->
                 <div class="col-12">
                     <div id="resposta-criacao"></div>
                 </div>
             </form>
         </div>
 
-        <!-- SEÇÃO: CANCELAR RESERVA -->
         <div class="section-card fade-in">
             <h2><span class="section-icon">❌</span> Cancelar Reserva</h2>
             <form id="form-cancelar-reserva" class="row g-3">
-                <!-- Campo: ID da reserva -->
                 <div class="col-md-6">
                     <label for="id_reserva" class="form-label">ID da Reserva:</label>
                     <input type="text" id="id_reserva" class="form-control" placeholder="Digite o ID da reserva" />
                 </div>
                 
-                <!-- Botão de cancelar reserva -->
                 <div class="col-12">
                     <button type="button" class="btn btn-primary" onclick="cancelarReserva()">
                         🗑️ Cancelar Reserva
                     </button>
                 </div>
                 
-                <!-- Área de resposta para cancelamento -->
                 <div class="col-12">
                     <div id="cancelamento-resposta"></div>
                 </div>
@@ -471,7 +421,6 @@
         </div>
     </div>
 
-    <!-- FUNCIONALIDADES -->
     <script>
          
         function converterDataParaISO(dataStr) {
@@ -502,21 +451,17 @@
             elemento.style.display = 'block';
         }
 
-        /* FUNÇÃO: CRIAR RESERVA */
         async function criarReserva() {
-            // Obtém referência do botão e ativa estado de loading
             const botao = document.querySelector('#form-criar-reserva .btn-primary');
             botao.classList.add('loading');
             botao.disabled = true;
 
-            // Coleta valores dos campos do formulário
             const dataInput = document.getElementById("data").value;
             const horaInput = document.getElementById("hora").value;
             const mesaInput = document.getElementById("mesa").value;
             const pessoasInput = document.getElementById("pessoas").value;
             const responsavelInput = document.getElementById("responsavel").value;
 
-            // Validação: todos os campos devem estar preenchidos
             if (!dataInput || !horaInput || !mesaInput || !pessoasInput || !responsavelInput) {
                 mostrarResposta("resposta-criacao", "Preencha todos os campos", "error");
                 botao.classList.remove('loading');
@@ -524,7 +469,6 @@
                 return;
             }
 
-            // Validação: formato da data
             const dataISO = converterDataParaISO(dataInput);
             if (!dataISO) {
                 mostrarResposta("resposta-criacao", "Formato de data inválido. Use DD/MM/AAAA", "error");
@@ -533,7 +477,6 @@
                 return;
             }
 
-            // Validação: data e hora não podem ser no passado
             if (!validarDataHora(dataInput, horaInput)) {
                 mostrarResposta("resposta-criacao", "Não é possível fazer reservas para datas/horas passadas", "error");
                 botao.classList.remove('loading');
@@ -541,7 +484,6 @@
                 return;
             }
 
-            // Prepara dados para envio à API
             const dados = {
                 data: dataISO,
                 hora: horaInput,
@@ -551,7 +493,6 @@
             };
 
             try {
-                // Envia requisição POST para criar reserva
                 const res = await fetch('/reserva', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -559,42 +500,33 @@
                 });
 
                 if (res.ok) {
-                    // Sucesso: exibe mensagem e limpa formulário
                     const resultado = await res.json();
                     mostrarResposta("resposta-criacao", `Reserva criada com sucesso! ID: ${resultado.id}`, "success");
                     
-                    // Limpa todos os campos do formulário
                     document.getElementById("data").value = '';
                     document.getElementById("hora").value = '';
                     document.getElementById("mesa").value = '';
                     document.getElementById("pessoas").value = '';
                     document.getElementById("responsavel").value = '';
                 } else {
-                    // Erro: exibe mensagem de erro retornada pela API
                     const erro = await res.json();
                     mostrarResposta("resposta-criacao", `Erro: ${erro.mensagem || erro.error}`, "error");
                 }
             } catch (error) {
-                // Erro de conexão
                 mostrarResposta("resposta-criacao", "Erro de conexão. Tente novamente.", "error");
             }
 
-            // Remove estado de loading
             botao.classList.remove('loading');
             botao.disabled = false;
         }
 
-        /* FUNÇÃO: CANCELAR RESERVA */
         async function cancelarReserva() {
-            // Obtém referência do botão e ativa estado de loading
             const botao = document.querySelector('#form-cancelar-reserva .btn-primary');
             botao.classList.add('loading');
             botao.disabled = true;
 
-            // Coleta ID da reserva
             const id = document.getElementById("id_reserva").value;
             
-            // Validação: ID deve estar preenchido
             if (!id) {
                 mostrarResposta("cancelamento-resposta", "Digite o ID da reserva", "error");
                 botao.classList.remove('loading');
@@ -603,58 +535,46 @@
             }
 
             try {
-                // Envia requisição DELETE para cancelar reserva
                 const res = await fetch(`/reserva/${id}`, { method: 'DELETE' });
 
                 if (res.ok) {
-                    // Sucesso: exibe mensagem e limpa campo
                     mostrarResposta("cancelamento-resposta", "Reserva cancelada com sucesso", "success");
                     document.getElementById("id_reserva").value = '';
                 } else {
-                    // Erro: exibe mensagem de erro retornada pela API
                     const erro = await res.json();
                     mostrarResposta("cancelamento-resposta", `Erro: ${erro.mensagem || erro.error}`, "error");
                 }
             } catch (error) {
-                // Erro de conexão
                 mostrarResposta("cancelamento-resposta", "Erro de conexão. Tente novamente.", "error");
             }
 
-            // Remove estado de loading
             botao.classList.remove('loading');
             botao.disabled = false;
         }
 
-        /* INICIALIZAÇÃO E ANIMAÇÕES */
         document.addEventListener('DOMContentLoaded', function() {
-            // Animação de entrada dos cards
             const cards = document.querySelectorAll('.section-card');
             
             cards.forEach((card, index) => {
                 setTimeout(() => {
-                    // Configura estado inicial (invisível e deslocado)
                     card.style.opacity = '0';
                     card.style.transform = 'translateY(30px)';
                     card.style.transition = 'all 0.6s ease';
                     
-                    // Aplica animação de entrada
                     setTimeout(() => {
                         card.style.opacity = '1';
                         card.style.transform = 'translateY(0)';
                     }, 100);
-                }, index * 200); // Delay crescente para cada card
+                }, index * 200);
             });
 
-            // Efeitos de interação nos inputs
             const inputs = document.querySelectorAll('.form-control, .form-select');
             inputs.forEach(input => {
-                // Efeito de foco: aumenta ligeiramente o container
                 input.addEventListener('focus', function() {
                     this.parentElement.style.transform = 'scale(1.02)';
                     this.parentElement.style.transition = 'transform 0.3s ease';
                 });
-                
-                // Efeito de blur: retorna ao tamanho normal
+
                 input.addEventListener('blur', function() {
                     this.parentElement.style.transform = 'scale(1)';
                 });
@@ -662,7 +582,7 @@
         });
     </script>
 
-    <!-- Bootstrap JavaScript -->
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
